@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA TOPUP — Ultimate Gaming Top-Up Platform</title>
+  <link rel="icon" type="image/png" href="nova-topup-logo.png">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+            },
+            accent: {
+              cyan: '#06b6d4',
+              neon: '#10b981',
+              violet: '#8b5cf6',
+              amber: '#f59e0b',
+              crimson: '#ef4444'
+            },
+            dark: {
+              900: '#0b0f19',
+              850: '#111827',
+              800: '#151e32',
+              700: '#1e293b',
+              600: '#334155'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'pulse-glow': 'pulseGlow 2.5s infinite ease-in-out',
+            'shimmer': 'shimmer 1.8s infinite linear',
+          },
+          keyframes: {
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.6', filter: 'drop-shadow(0 0 15px rgba(59,130,246,0.3))' },
+              '50%': { opacity: '1', filter: 'drop-shadow(0 0 25px rgba(6,182,212,0.6))' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #070a12;
+      color: #f1f5f9;
+      overflow-x: hidden;
+    }
+    .font-gaming {
+      font-family: 'Rajdhani', sans-serif;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0f19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+    .neon-border-cyan {
+      box-shadow: 0 0 15px -3px rgba(6, 182, 212, 0.35);
+    }
+    .neon-border-blue {
+      box-shadow: 0 0 20px -2px rgba(59, 130, 246, 0.4);
+    }
+    .gradient-card {
+      background: linear-gradient(145deg, rgba(21, 30, 50, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+      backdrop-filter: blur(12px);
+    }
+    .khqr-card-shadow {
+      box-shadow: 0 10px 30px -5px rgba(225, 29, 72, 0.25);
+    }
+    .game-hero-glow {
+      background: radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+  <!-- ================= TOP NOTIFICATION BAR ================= -->
+  <div class="bg-gradient-to-r from-blue-900/60 via-purple-900/60 to-cyan-900/60 border-b border-blue-500/20 text-xs py-2 px-4 text-center text-slate-300 flex items-center justify-center gap-2">
+    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-accent-neon/20 text-accent-neon border border-accent-neon/30">PROMO</span>
+    <span>Use code <b class="text-white tracking-wider font-mono">ROBLOX20</b> for $3.00 off or <b class="text-white tracking-wider font-mono">NEXUS10</b> for 10% instant discount!</span>
+    <button onclick="applyBannerPromo('ROBLOX20')" class="underline hover:text-cyan-400 font-semibold ml-1 cursor-pointer">Auto-apply</button>
+  </div>
+
+  <!-- ================= HEADER / NAVBAR ================= -->
+  <header class="sticky top-0 z-40 bg-dark-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Logo -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="resetToHome()">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-cyan-500 to-indigo-600 p-[2px] flex items-center justify-center shadow-lg shadow-blue-500/20">
+          <div class="w-full h-full bg-dark-900 rounded-[10px] flex items-center justify-center">
+            <img src="nova-topup-logo.png" alt="NOVA TOPUP logo" class="w-full h-full rounded-[10px] object-cover">
+          </div>
+        </div>
+        <div>
+          <span class="font-gaming text-2xl font-bold tracking-wider text-white">NOVA<span class="text-cyan-400">TOPUP</span></span>
+          <span class="hidden sm:inline-block ml-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded">Instant Top-Up</span>
+        </div>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="flex-1 max-w-md hidden md:block">
+        <div class="relative">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <input 
+            type="text" 
+            id="searchInput"
+            oninput="handleSearch(this.value)"
+            placeholder="Search Roblox, Free Fire, MLBB, PUBG..." 
+            class="w-full pl-10 pr-4 py-2 bg-dark-800 border border-slate-700/80 rounded-xl text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
+          >
+          <span id="searchClearBtn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-white cursor-pointer">✕</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3">
+        <!-- Order History Button -->
+        <button onclick="openHistoryModal()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium bg-dark-800 hover:bg-dark-700 border border-slate-700 text-slate-200 hover:text-white transition shadow-sm">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span class="hidden sm:inline">My Orders</span>
+          <span id="orderHistoryBadge" class="hidden text-xs bg-cyan-500/20 text-cyan-300 font-bold px-1.5 py-0.2 rounded-full border border-cyan-500/40">0</span>
+        </button>
+
+        <!-- Help / Support Button -->
+        <button onclick="toggleSupportModal()" class="p-2 text-slate-400 hover:text-slate-200 rounded-xl hover:bg-dark-800 border border-transparent hover:border-slate-700">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </button>
+
+        <!-- Country / Currency Selector -->
+        <div class="flex items-center gap-1.5 bg-dark-800 border border-slate-700 px-2.5 py-1.5 rounded-xl text-xs font-semibold text-slate-300">
+          <span class="text-base">🌐</span>
+          <span>USD ($)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO BANNER ================= -->
+  <section class="game-hero-glow border-b border-slate-800/80 pt-8 pb-10 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
+      <div class="text-center lg:text-left space-y-4 max-w-2xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          Direct Official API Top-Ups • 100% Secure
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+          Level Up Your Game with <span class="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">Instant Recharges</span>
+        </h1>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+          Fast, verified, and automatic delivery in seconds for Roblox Robux, Free Fire Diamonds, Mobile Legends Diamonds, and PUBG Mobile UC. No login password required.
+        </p>
+        <!-- Trust badges -->
+        <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs text-slate-400">
+          <div class="flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-accent-neon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <span>Instant 10-Second Delivery</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-accent-neon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <span>Authorized Game Partner</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-accent-neon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <span>Secure KHQR Payments</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Roblox Promo Card -->
+      <div onclick="selectGame('roblox')" class="cursor-pointer group relative w-full sm:w-80 p-5 rounded-2xl bg-gradient-to-br from-dark-800 via-dark-850 to-dark-900 border border-slate-700/80 hover:border-cyan-500/60 transition-all duration-300 shadow-xl hover:shadow-cyan-500/10">
+        <div class="absolute -top-3 right-4 px-3 py-0.5 rounded-full bg-gradient-to-r from-red-500 to-amber-500 text-[11px] font-bold text-white uppercase tracking-wider shadow">
+          ★ #1 Most Popular
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 rounded-xl bg-slate-800 flex items-center justify-center p-2 border border-slate-700 overflow-hidden group-hover:scale-105 transition">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Roblox_Corporation_2025_logo.svg/250px-Roblox_Corporation_2025_logo.svg.png"
+              alt="Roblox logo"
+              class="w-12 h-12 object-contain"
+            >
+          </div>
+          <div>
+            <h3 class="font-gaming text-xl font-bold text-white group-hover:text-cyan-400 transition">ROBLOX</h3>
+            <p class="text-xs text-slate-400">Official Robux & Subscriptions</p>
+            <div class="mt-1 flex items-center gap-1.5 text-xs text-amber-400 font-semibold">
+              <span>Up to +15% Bonus Robux</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+          <span>Starts at <b class="text-white font-mono text-sm">$0.99</b></span>
+          <span class="text-cyan-400 flex items-center gap-1 font-medium group-hover:translate-x-1 transition">
+            Top Up Now 
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+    <!-- Category Filter Tabs -->
+    <div class="flex items-center justify-between gap-4 flex-wrap border-b border-slate-800 pb-4">
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-none w-full sm:w-auto" id="categoryContainer">
+        <button onclick="filterCategory('all')" data-cat="all" class="cat-pill active px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white transition whitespace-nowrap">
+          All Games (4)
+        </button>
+        <button onclick="filterCategory('Sandbox')" data-cat="Sandbox" class="cat-pill px-4 py-2 rounded-xl text-xs font-semibold bg-dark-800 text-slate-400 hover:text-white hover:bg-dark-700 transition whitespace-nowrap">
+          Sandbox & Creation
+        </button>
+        <button onclick="filterCategory('Shooter')" data-cat="Shooter" class="cat-pill px-4 py-2 rounded-xl text-xs font-semibold bg-dark-800 text-slate-400 hover:text-white hover:bg-dark-700 transition whitespace-nowrap">
+          Shooter & FPS
+        </button>
+        <button onclick="filterCategory('MOBA')" data-cat="MOBA" class="cat-pill px-4 py-2 rounded-xl text-xs font-semibold bg-dark-800 text-slate-400 hover:text-white hover:bg-dark-700 transition whitespace-nowrap">
+          MOBA
+        </button>
+      </div>
+
+      <div class="text-xs text-slate-400 flex items-center gap-2">
+        <span>Sort by:</span>
+        <select id="sortSelect" onchange="applySorting(this.value)" class="bg-dark-800 border border-slate-700 text-slate-200 rounded-lg px-2.5 py-1 text-xs focus:outline-none focus:border-cyan-500">
+          <option value="popularity">Most Popular</option>
+          <option value="name">Name (A-Z)</option>
+          <option value="discount">Highest Bonus</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Games Grid -->
+    <section>
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+          <span>Popular Games & Platforms</span>
+          <span class="text-xs font-normal text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full" id="gameCountBadge">4 titles</span>
+        </h2>
+        <span class="text-xs text-cyan-400 hidden sm:inline">Tap any game to customize your recharge</span>
+      </div>
+
+      <div id="gamesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+        <!-- Injected via JavaScript -->
+      </div>
+      
+      <!-- No games match empty state -->
+      <div id="emptyCatalogState" class="hidden text-center py-16 space-y-3">
+        <div class="w-16 h-16 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-slate-500 text-2xl">
+          🔍
+        </div>
+        <p class="text-slate-300 font-semibold">No games found matching your search</p>
+        <p class="text-xs text-slate-500">Try searching for "Roblox", "Free Fire", "Mobile Legends", or "PUBG Mobile"</p>
+        <button onclick="clearSearch()" class="mt-2 text-xs text-cyan-400 underline">Reset all filters</button>
+      </div>
+    </section>
+
+    <!-- Interactive Top-Up Station (Appears when game selected or scrolled to) -->
+    <section id="rechargeSection" class="scroll-mt-24 pt-6 border-t border-slate-800">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <span class="text-xs font-semibold text-cyan-400 tracking-wider uppercase">Recharge Console</span>
+          <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+            <span id="activeGameTitle">Top Up: Roblox Robux</span>
+            <span id="activeGameCurrencyBadge" class="text-xs font-normal bg-blue-500/10 text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded-full">Currency: Robux R$</span>
+          </h2>
+        </div>
+        <button onclick="scrollToCatalog()" class="text-xs text-slate-400 hover:text-white flex items-center gap-1">
+          <span>Switch Game</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left 8 Columns: Recharge Configuration Steps -->
+        <div class="lg:col-span-8 space-y-6">
+
+          <!-- Step 1: Account Identification -->
+          <div class="gradient-card border border-slate-800 rounded-2xl p-5 sm:p-6 transition hover:border-slate-700">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 font-bold text-sm flex items-center justify-center border border-cyan-500/40">1</span>
+              <div>
+                <h3 class="text-sm sm:text-base font-bold text-white">Enter Account Information</h3>
+                <p class="text-xs text-slate-400" id="step1Instruction">Provide your Roblox Username or User ID</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="sm:col-span-2 relative">
+                <label class="block text-xs font-medium text-slate-300 mb-1" id="playerIdLabel">Roblox Username / User ID</label>
+                <div class="relative">
+                  <input 
+                    type="text" 
+                    id="playerIdInput" 
+                    placeholder="e.g. GamerPro_99 or 194827593"
+                    value="RobloxMaster_2026"
+                    oninput="debouncedVerifyAccount()"
+                    class="w-full bg-dark-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition"
+                  >
+                  <button 
+                    type="button" 
+                    onclick="triggerManualVerify()"
+                    class="absolute right-2 top-1/2 -translate-y-1/2 px-2.5 py-1 text-xs rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 transition"
+                  >
+                    Verify
+                  </button>
+                </div>
+              </div>
+
+              <!-- Optional Zone/Server selector for games that require it -->
+              <div id="serverFieldWrapper">
+                <label class="block text-xs font-medium text-slate-300 mb-1" id="serverFieldLabel">Server / Zone ID</label>
+                <select id="serverSelect" class="w-full bg-dark-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-400">
+                  <option value="global">Global (Universal)</option>
+                  <option value="na">North America</option>
+                  <option value="eu">Europe</option>
+                  <option value="asia">Asia / Southeast Asia</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Verification Feedback badge -->
+            <div id="verifyFeedback" class="mt-3 flex items-center gap-2 text-xs py-2 px-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+              <svg class="w-4 h-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Account Verified: <b>RobloxMaster_2026</b> (Region: North America)</span>
+            </div>
+          </div>
+
+          <!-- Step 2: Select Top-Up Denomination -->
+          <div class="gradient-card border border-slate-800 rounded-2xl p-5 sm:p-6 transition hover:border-slate-700">
+            <div class="flex items-center justify-between gap-3 mb-4">
+              <div class="flex items-center gap-3">
+                <span class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 font-bold text-sm flex items-center justify-center border border-cyan-500/40">2</span>
+                <div>
+                  <h3 class="text-sm sm:text-base font-bold text-white">Select Top-Up Amount</h3>
+                  <p class="text-xs text-slate-400">Choose your desired package or pass</p>
+                </div>
+              </div>
+              <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">Instant Recharge</span>
+            </div>
+
+            <!-- Denomination Cards Grid -->
+            <div id="denominationsGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <!-- Dynamically populated based on active game -->
+            </div>
+          </div>
+
+          <!-- Step 3: Select Payment Method -->
+          <div class="gradient-card border border-slate-800 rounded-2xl p-5 sm:p-6 transition hover:border-slate-700">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 font-bold text-sm flex items-center justify-center border border-cyan-500/40">3</span>
+              <div>
+                <h3 class="text-sm sm:text-base font-bold text-white">Pay with KHQR</h3>
+                <p class="text-xs text-slate-400">Scan and pay securely using Cambodia KHQR (Bakong)</p>
+              </div>
+            </div>
+
+            <!-- Payment channels tabs / list -->
+            <div id="paymentMethodsGrid" class="grid grid-cols-1 gap-3">
+              <!-- Injected by JavaScript -->
+            </div>
+
+            <!-- KHQR Cambodian Banner Feature -->
+            <div class="mt-4 p-3.5 rounded-xl bg-gradient-to-r from-rose-950/40 via-red-900/20 to-dark-900 border border-rose-500/30 flex items-center justify-between flex-wrap gap-2 text-xs">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+                <span class="text-rose-300 font-semibold">Cambodia KHQR (Bakong) Instant System Online</span>
+              </div>
+              <div class="flex items-center gap-2 text-[11px] text-slate-400">
+                <span class="px-2 py-0.5 rounded bg-dark-900 border border-slate-700 font-semibold text-slate-200">ABA Mobile</span>
+                <span class="px-2 py-0.5 rounded bg-dark-900 border border-slate-700 font-semibold text-slate-200">ACLEDA</span>
+                <span class="px-2 py-0.5 rounded bg-dark-900 border border-slate-700 font-semibold text-slate-200">Wing</span>
+                <span class="px-2 py-0.5 rounded bg-dark-900 border border-slate-700 font-semibold text-slate-200">+35 Banks</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Contact & Receipt delivery -->
+          <div class="gradient-card border border-slate-800 rounded-2xl p-5 sm:p-6 transition hover:border-slate-700">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 font-bold text-sm flex items-center justify-center border border-cyan-500/40">4</span>
+              <div>
+                <h3 class="text-sm sm:text-base font-bold text-white">Receipt & Notification</h3>
+                <p class="text-xs text-slate-400">Get your invoice & transaction hash emailed instantly</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Email Address</label>
+                <input 
+                  type="email" 
+                  id="userEmailInput" 
+                  placeholder="alex.player@gmail.com"
+                  value="player.one@gamemail.com"
+                  class="w-full bg-dark-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition"
+                >
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">WhatsApp / SMS (Optional)</label>
+                <input 
+                  type="tel" 
+                  id="userPhoneInput" 
+                  placeholder="+1 (555) 019-2834" 
+                  class="w-full bg-dark-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition"
+                >
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right 4 Columns: Sticky Order Summary Card -->
+        <div class="lg:col-span-4 lg:sticky lg:top-20 space-y-4">
+          <div class="gradient-card border border-cyan-500/30 rounded-2xl p-5 sm:p-6 shadow-xl neon-border-blue relative overflow-hidden">
+            <!-- Background accent glow -->
+            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+              <h3 class="font-bold text-white flex items-center gap-2">
+                <span>Order Summary</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              </h3>
+              <span class="text-xs text-slate-400 uppercase tracking-wider font-mono">LIVE PREVIEW</span>
+            </div>
+
+            <!-- Summary details -->
+            <div class="py-4 space-y-3 text-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Target Game</span>
+                <span id="sumGameName" class="font-semibold text-white">Roblox</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Recipient ID</span>
+                <span id="sumPlayerId" class="font-mono text-cyan-400 font-semibold truncate max-w-[150px]">RobloxMaster_2026</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Selected Item</span>
+                <span id="sumItemTitle" class="font-semibold text-white text-right">800 Robux (+80 Bonus)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Payment Gateway</span>
+                <span id="sumPaymentName" class="font-semibold text-slate-200">Cambodia KHQR (Bakong)</span>
+              </div>
+
+              <div class="pt-3 border-t border-slate-800 space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-400">Original Price</span>
+                  <span id="sumBasePrice" class="font-mono text-slate-300">$9.99</span>
+                </div>
+                <div id="sumDiscountRow" class="hidden flex items-center justify-between text-xs text-emerald-400">
+                  <span>Promo Code (<span id="sumDiscountCodeLabel">ROBLOX20</span>)</span>
+                  <span id="sumDiscountAmount" class="font-mono">-$3.00</span>
+                </div>
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-400">Service Fee</span>
+                  <span class="text-emerald-400 font-medium font-mono">FREE ($0.00)</span>
+                </div>
+              </div>
+
+              <!-- Promo Code Input Box -->
+              <div class="pt-3">
+                <label class="block text-xs font-medium text-slate-400 mb-1">Have a Coupon or Promo Code?</label>
+                <div class="flex gap-2">
+                  <input 
+                    type="text" 
+                    id="promoCodeInput"
+                    placeholder="e.g. ROBLOX20" 
+                    class="w-full uppercase font-mono bg-dark-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+                  >
+                  <button 
+                    onclick="applyPromoCode()"
+                    class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 shrink-0 transition"
+                  >
+                    Apply
+                  </button>
+                </div>
+                <p id="promoMessage" class="text-[11px] mt-1.5 text-slate-500"></p>
+              </div>
+
+              <!-- Grand Total -->
+              <div class="pt-4 border-t border-slate-800 flex items-baseline justify-between">
+                <div>
+                  <span class="text-xs text-slate-400 block">Total Due</span>
+                  <span class="text-[10px] text-slate-500">VAT & Taxes Included</span>
+                </div>
+                <div class="text-right">
+                  <span id="sumGrandTotal" class="text-2xl font-black text-cyan-400 font-mono">$9.99</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <button 
+              id="checkoutButton"
+              onclick="initiateCheckout()"
+              class="w-full py-3.5 px-4 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 hover:from-blue-500 hover:to-cyan-400 shadow-lg shadow-cyan-500/25 active:scale-[0.98] transition flex items-center justify-center gap-2 group cursor-pointer"
+            >
+              <svg class="w-5 h-5 text-white group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+              <span class="tracking-wide">TOP UP NOW — INSTANT</span>
+            </button>
+
+            <!-- Guarantee note -->
+            <p class="text-[11px] text-center text-slate-400 mt-3 flex items-center justify-center gap-1">
+              <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z" clip-rule="evenodd"/></svg>
+              <span>100% Guaranteed Official Delivery or Money Back</span>
+            </p>
+          </div>
+
+          <!-- Quick FAQ / Support Card -->
+          <div class="gradient-card border border-slate-800 rounded-2xl p-4 text-xs space-y-2">
+            <h4 class="font-semibold text-slate-300 flex items-center gap-1.5">
+              <span>💡 How does top-up work?</span>
+            </h4>
+            <p class="text-slate-400 leading-relaxed">
+              We connect directly with official publishers. Once your payment clears, currency appears in your game account instantly without requiring your game password.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Why Choose NOVA TOPUP Section -->
+    <section class="border-t border-slate-800/80 pt-10">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <h3 class="text-xl font-bold text-white">Why Over 2,500,000 Gamers Trust NOVA TOPUP</h3>
+        <p class="text-xs text-slate-400 mt-1">Official partnership with leading game publishers worldwide</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="p-4 rounded-xl bg-dark-850 border border-slate-800 flex items-start gap-3">
+          <div class="p-2.5 rounded-lg bg-blue-500/10 text-cyan-400">⚡</div>
+          <div>
+            <h4 class="text-sm font-bold text-white">10s Fast Dispatch</h4>
+            <p class="text-xs text-slate-400 mt-0.5">Automated bots send Robux & Diamonds right after confirmation.</p>
+          </div>
+        </div>
+        <div class="p-4 rounded-xl bg-dark-850 border border-slate-800 flex items-start gap-3">
+          <div class="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400">🛡️</div>
+          <div>
+            <h4 class="text-sm font-bold text-white">No Passwords Needed</h4>
+            <p class="text-xs text-slate-400 mt-0.5">We only request your User ID or Gamer Tag. Your account stays safe.</p>
+          </div>
+        </div>
+        <div class="p-4 rounded-xl bg-dark-850 border border-slate-800 flex items-start gap-3">
+          <div class="p-2.5 rounded-lg bg-purple-500/10 text-purple-400">💳</div>
+          <div>
+            <h4 class="text-sm font-bold text-white">KHQR Payments</h4>
+            <p class="text-xs text-slate-400 mt-0.5">Pay securely with Cambodia KHQR using a supported banking app.</p>
+          </div>
+        </div>
+        <div class="p-4 rounded-xl bg-dark-850 border border-slate-800 flex items-start gap-3">
+          <div class="p-2.5 rounded-lg bg-amber-500/10 text-amber-400">🎁</div>
+          <div>
+            <h4 class="text-sm font-bold text-white">Bonus Rewards</h4>
+            <p class="text-xs text-slate-400 mt-0.5">Earn cashback points on every single purchase for free Robux.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="mt-16 bg-dark-900 border-t border-slate-800/80 py-10 px-4 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center md:text-left">
+        <div class="flex items-center justify-center md:justify-start gap-2">
+          <span class="font-gaming text-lg font-bold text-white">NOVA TOPUP</span>
+          <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded">v3.4 Production</span>
+        </div>
+        <p class="text-slate-400 max-w-md">NOVA TOPUP is an independent digital game voucher provider. Roblox is a registered trademark of Roblox Corporation.</p>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 text-slate-400">
+        <a href="#terms" onclick="showInfoToast('Terms of Service: Standard digital consumer rights apply.')" class="hover:text-cyan-400 transition">Terms of Service</a>
+        <a href="#privacy" onclick="showInfoToast('Privacy Policy: No gaming passwords are ever stored.')" class="hover:text-cyan-400 transition">Privacy Policy</a>
+        <a href="#refund" onclick="showInfoToast('Refund Guarantee: Unfulfilled orders are refunded 100% within 1 hour.')" class="hover:text-cyan-400 transition">Refund Guarantee</a>
+        <a href="#partners" onclick="showInfoToast('Official Publisher API status: ONLINE (Latency: 42ms)')" class="hover:text-cyan-400 transition">Publisher Portal</a>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-6 pt-6 border-t border-slate-800 text-center text-slate-600">
+      © 2026 NOVA TOPUP. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- ================= MODALS & DIALOGS ================= -->
+
+  <!-- 0. Dynamic Cambodia KHQR (Bakong / ABA / ACLEDA / Wing) Modal -->
+  <div id="khqrModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="w-full max-w-md bg-dark-900 border border-rose-500/40 rounded-3xl p-5 sm:p-6 shadow-2xl khqr-card-shadow relative overflow-hidden my-auto">
+      
+      <!-- Close button -->
+      <button onclick="cancelKhqrPayment()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-full bg-dark-800 border border-slate-700 z-10">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <!-- Authentic KHQR Header -->
+      <div class="rounded-2xl overflow-hidden border border-rose-500/40 shadow-xl bg-slate-950">
+        
+        <!-- Official Red KHQR Branding Bar -->
+        <div class="bg-gradient-to-r from-rose-700 via-rose-600 to-red-600 px-4 py-2.5 flex items-center justify-between text-white shadow">
+          <div class="flex items-center gap-2">
+            <div class="bg-white text-rose-600 font-black text-xs px-2 py-0.5 rounded tracking-tighter">
+              KHQR
+            </div>
+            <span class="text-xs font-semibold tracking-wide">Bakong Universal Payment</span>
+          </div>
+          <span class="text-[10px] bg-black/30 backdrop-blur-sm px-2 py-0.5 rounded-full font-mono font-medium">EMVCo Compliant</span>
+        </div>
+
+        <!-- Merchant and Currency Switcher Area -->
+        <div class="bg-dark-850 p-4 border-b border-slate-800 text-center space-y-1">
+          <div class="flex items-center justify-center gap-1.5 text-xs text-slate-400">
+            <span>Merchant:</span>
+            <span class="font-bold text-white tracking-wide">NOVA TOPUP GAMING (CAMBODIA)</span>
+          </div>
+
+          <!-- Price Display with Live Toggle -->
+          <div class="py-2">
+            <div class="flex items-center justify-center gap-2">
+              <span id="khqrAmountPrimary" class="text-3xl font-black text-white font-mono tracking-tight">$9.99</span>
+              <span id="khqrCurrencyLabel" class="text-xs font-bold text-rose-400 uppercase bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/30">USD</span>
+            </div>
+            <p id="khqrConvertedSub" class="text-xs text-slate-400 font-mono mt-0.5">≈ 40,959 KHR (Rate: 1 USD = 4,100 KHR)</p>
+          </div>
+
+          <!-- Currency Toggle Switch -->
+          <div class="inline-flex rounded-lg bg-dark-900 p-0.5 border border-slate-700 text-xs">
+            <button id="toggleUsdBtn" onclick="switchKhqrCurrency('USD')" class="px-3 py-1 rounded-md font-semibold text-white bg-rose-600 shadow-sm transition">
+              Pay USD ($)
+            </button>
+            <button id="toggleKhrBtn" onclick="switchKhqrCurrency('KHR')" class="px-3 py-1 rounded-md font-semibold text-slate-400 hover:text-white transition">
+              Pay Riel (៛)
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Dynamic QR Code Container with Red Framing -->
+        <div class="bg-white p-5 flex flex-col items-center justify-center relative">
+          <div id="khqrCanvasWrapper" class="relative p-2 bg-white rounded-xl shadow-inner flex items-center justify-center">
+            <!-- QR code rendered dynamically via qrcode.js into this div -->
+            <div id="khqrCodeTarget"></div>
+            <!-- Center Bakong/KHQR Mini Badge -->
+            <div class="absolute inset-0 m-auto w-10 h-10 rounded-full bg-rose-600 text-white font-black text-[10px] flex items-center justify-center border-2 border-white shadow-md pointer-events-none">
+              KHQR
+            </div>
+          </div>
+
+          <!-- Scannable Banks Showcase Badge -->
+          <div class="mt-3 flex items-center justify-center gap-2 text-[10px] font-semibold text-slate-600">
+            <span>Scan with:</span>
+            <span class="bg-slate-100 text-slate-800 px-1.5 py-0.5 rounded font-bold">ABA</span>
+            <span class="bg-slate-100 text-slate-800 px-1.5 py-0.5 rounded font-bold">ACLEDA</span>
+            <span class="bg-slate-100 text-slate-800 px-1.5 py-0.5 rounded font-bold">Wing</span>
+            <span class="bg-slate-100 text-slate-800 px-1.5 py-0.5 rounded font-bold">Bakong</span>
+          </div>
+        </div>
+
+        <!-- Countdown Timer & Real-time Polling Status -->
+        <div class="bg-dark-850 p-4 border-t border-slate-800 space-y-3">
+          
+          <!-- Timer Bar -->
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              QR Expires in:
+            </span>
+            <span id="khqrCountdown" class="font-mono font-bold text-rose-400 text-sm">05:00</span>
+          </div>
+          
+          <div class="w-full bg-dark-900 rounded-full h-1.5 overflow-hidden">
+            <div id="khqrTimerProgress" class="bg-rose-500 h-full w-full transition-all duration-1000"></div>
+          </div>
+
+          <!-- Status Indicator Pill -->
+          <div id="khqrStatusPill" class="py-2 px-3 rounded-xl bg-dark-900 border border-slate-800 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <span class="relative flex h-2.5 w-2.5">
+                <span id="khqrStatusPing" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                <span id="khqrStatusDot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500"></span>
+              </span>
+              <span id="khqrStatusText" class="text-slate-300 font-medium">Waiting for customer scan...</span>
+            </div>
+            <span class="text-[10px] text-slate-500 font-mono">Bakong Polling</span>
+          </div>
+
+          <!-- Bakong MD5 Hash Reference -->
+          <div class="flex items-center justify-between text-[11px] bg-dark-900/60 p-2 rounded-lg border border-slate-800 font-mono text-slate-400">
+            <span class="truncate max-w-[200px]" id="khqrMd5Hash">MD5: e7b189a03f42c1...</span>
+            <button onclick="copyKhqrHash()" class="text-rose-400 hover:text-rose-300 ml-2 underline text-[10px] shrink-0">Copy MD5</button>
+          </div>
+
+          <!-- Fast Testing Helper Button -->
+          <div class="pt-1">
+            <button 
+              onclick="checkKhqrPaymentStatus()" 
+              id="simulateScanBtn"
+              class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white font-bold text-xs shadow-md transition flex items-center justify-center gap-1.5 group cursor-pointer"
+            >
+              <svg class="w-4 h-4 text-white group-hover:scale-110 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+              <span>Check Payment Status</span>
+            </button>
+            <p class="text-[10px] text-center text-slate-500 mt-1">Payment status is checked automatically. You can also check it manually.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Action helper row -->
+      <div class="mt-3 flex items-center justify-between text-xs text-slate-400">
+        <button onclick="downloadKhqrImage()" class="hover:text-rose-400 flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Save QR Code
+        </button>
+        <button onclick="regenerateKhqr()" class="hover:text-rose-400 flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          Refresh QR
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 1. Real-time Checkout Processing & Receipt Modal -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-lg gradient-card border border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+      
+      <!-- Processing State -->
+      <div id="modalProcessingState" class="text-center py-6 space-y-6">
+        <div class="relative w-24 h-24 mx-auto flex items-center justify-center">
+          <div class="absolute inset-0 rounded-full border-4 border-cyan-500/20"></div>
+          <div class="absolute inset-0 rounded-full border-4 border-t-cyan-400 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
+          <div class="w-16 h-16 rounded-full bg-dark-900 flex items-center justify-center shadow-inner">
+            <svg class="w-8 h-8 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-xl font-bold text-white" id="processingTitle">Connecting to Game Server...</h3>
+          <p class="text-xs text-slate-400" id="processingSub">Validating user handshake with publisher API</p>
+        </div>
+
+        <!-- Animated Progress Steps -->
+        <div class="w-full bg-dark-900 rounded-full h-2 overflow-hidden border border-slate-800">
+          <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-cyan-400 h-full w-1/4 transition-all duration-500"></div>
+        </div>
+
+        <div class="flex justify-between text-[11px] text-slate-400">
+          <span id="stepLabel1" class="text-cyan-400 font-semibold">1. Account Handshake</span>
+          <span id="stepLabel2">2. Payment Auth</span>
+          <span id="stepLabel3">3. Credit Transfer</span>
+        </div>
+      </div>
+
+      <!-- Success Receipt State -->
+      <div id="modalSuccessState" class="hidden space-y-6">
+        <div class="text-center space-y-2">
+          <div class="w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-2xl mx-auto flex items-center justify-center border border-emerald-500/40 shadow-lg shadow-emerald-500/20">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <h3 class="text-2xl font-bold text-white">Recharge Successful!</h3>
+          <p class="text-xs text-slate-300">Your in-game items have been credited instantly.</p>
+        </div>
+
+        <!-- Receipt Box -->
+        <div class="bg-dark-900/90 border border-slate-800 rounded-2xl p-4 text-xs space-y-3 font-mono">
+          <div class="flex justify-between text-slate-400 pb-2 border-b border-slate-800">
+            <span>Transaction ID:</span>
+            <span id="rcptTxId" class="text-cyan-400 font-bold select-all">TX-98421849</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Game:</span>
+            <span id="rcptGame" class="text-white">Roblox</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Recipient ID:</span>
+            <span id="rcptPlayer" class="text-white">RobloxMaster_2026</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Purchased:</span>
+            <span id="rcptItem" class="text-emerald-400 font-bold">800 Robux (+80 Bonus)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Payment Gateway:</span>
+            <span id="rcptPayment" class="text-slate-200">Cambodia KHQR (Bakong)</span>
+          </div>
+          <div class="flex justify-between pt-2 border-t border-slate-800 font-sans text-sm font-bold">
+            <span class="text-slate-300">Total Paid:</span>
+            <span id="rcptTotal" class="text-cyan-400 font-mono text-base">$9.99</span>
+          </div>
+        </div>
+
+        <div class="space-y-2 pt-2">
+          <button onclick="closeReceiptAndRefresh()" class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-dark-900 font-bold text-sm transition">
+            Done & Top-Up Another
+          </button>
+          <button onclick="printOrCopyReceipt()" class="w-full py-2 rounded-xl bg-dark-800 hover:bg-dark-700 text-slate-300 text-xs font-semibold border border-slate-700 transition flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span>Copy Receipt Details</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. Order History Modal -->
+  <div id="historyModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl gradient-card border border-slate-700 rounded-3xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-cyan-400 flex items-center justify-center font-bold">📋</div>
+          <h3 class="text-lg font-bold text-white">Your Order History</h3>
+        </div>
+        <button onclick="closeHistoryModal()" class="text-slate-400 hover:text-white p-1 text-lg">✕</button>
+      </div>
+
+      <!-- History Table / List -->
+      <div id="historyItemsContainer" class="max-h-96 overflow-y-auto space-y-3 pr-1">
+        <!-- Dynamically injected -->
+      </div>
+
+      <div class="pt-3 border-t border-slate-800 flex justify-between items-center text-xs text-slate-500">
+        <span>History saved locally in your browser</span>
+        <button onclick="clearHistory()" class="text-red-400 hover:underline">Clear History</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Customer Support Modal -->
+  <div id="supportModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-md gradient-card border border-slate-700 rounded-3xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <span>🎧 24/7 Gamer Support</span>
+        </h3>
+        <button onclick="toggleSupportModal()" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+      <p class="text-xs text-slate-400">Need help with missing Robux, incorrect GamerTag, or payment receipts? Our automated support bot & live agents are here 24/7.</p>
+      
+      <div class="space-y-3 text-xs">
+        <div class="p-3 bg-dark-900 rounded-xl border border-slate-800 flex items-center gap-3">
+          <span class="text-xl">💬</span>
+          <div>
+            <p class="font-bold text-white">Live Chat</p>
+            <p class="text-slate-400">Average response time: <b>Under 2 minutes</b></p>
+          </div>
+        </div>
+        <div class="p-3 bg-dark-900 rounded-xl border border-slate-800 flex items-center gap-3">
+          <span class="text-xl">📧</span>
+          <div>
+            <p class="font-bold text-white">Email Ticket</p>
+            <p class="text-slate-400">support@nexuspay.games</p>
+          </div>
+        </div>
+      </div>
+      <button onclick="showInfoToast('Support chat opened in background agent queue.')" class="w-full py-2.5 rounded-xl bg-cyan-500 text-dark-900 font-bold text-xs">
+        Start Live Chat
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification element -->
+  <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="px-4 py-3 rounded-2xl bg-dark-800 border border-cyan-500/40 text-white shadow-2xl flex items-center gap-3 text-xs">
+      <span id="toastIcon">✨</span>
+      <span id="toastMessage">Action completed</span>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT APPLICATION LOGIC ================= -->
+  <script>
+    /* ================= DATA REPOSITORY ================= */
+    const GAMES_CATALOG = [
+      {
+        id: 'roblox',
+        title: 'Roblox',
+        category: 'Sandbox',
+        badge: 'Top Seller',
+        badgeColor: 'bg-rose-500',
+        currencyName: 'Robux',
+        currencySymbol: 'R$',
+        iconType: 'roblox',
+        idLabel: 'Roblox Username or User ID',
+        idPlaceholder: 'e.g. RobloxGamer2026',
+        hasServer: false,
+        denominations: [
+          { id: 'rbx-80', name: '80 Robux', baseUnits: 80, bonus: 0, price: 0.99, tag: 'Starter' },
+          { id: 'rbx-400', name: '400 Robux', baseUnits: 400, bonus: 40, price: 4.99, tag: '+10% Bonus' },
+          { id: 'rbx-800', name: '800 Robux', baseUnits: 800, bonus: 80, price: 9.99, tag: 'Most Popular', popular: true },
+          { id: 'rbx-1700', name: '1,700 Robux', baseUnits: 1700, bonus: 200, price: 19.99, tag: '+12% Extra' },
+          { id: 'rbx-4500', name: '4,500 Robux', baseUnits: 4500, bonus: 500, price: 49.99, tag: 'Best Value' },
+          { id: 'rbx-10000', name: '10,000 Robux', baseUnits: 10000, bonus: 1500, price: 99.99, tag: '+15% Whale Pack' },
+          { id: 'rbx-premium', name: 'Roblox Premium 1000', baseUnits: 1000, bonus: 100, price: 9.99, tag: 'Monthly Pass' }
+        ]
+      },
+      {
+        id: 'freefire',
+        title: 'Free Fire',
+        category: 'Shooter',
+        badge: 'Hot Deal',
+        badgeColor: 'bg-amber-500',
+        currencyName: 'Diamonds',
+        currencySymbol: '💎',
+        iconType: 'ff',
+        idLabel: 'Player ID (UID)',
+        idPlaceholder: 'e.g. 5839201948',
+        hasServer: false,
+        denominations: [
+          { id: 'ff-100', name: '100 + 10 Diamonds', baseUnits: 100, bonus: 10, price: 0.99, tag: 'Promo' },
+          { id: 'ff-310', name: '310 + 31 Diamonds', baseUnits: 310, bonus: 31, price: 2.99, tag: '+10%' },
+          { id: 'ff-520', name: '520 + 52 Diamonds', baseUnits: 520, bonus: 52, price: 4.99, tag: 'Popular', popular: true },
+          { id: 'ff-1060', name: '1,060 + 106 Diamonds', baseUnits: 1060, bonus: 106, price: 9.99, tag: '+10%' },
+          { id: 'ff-2180', name: '2,180 + 218 Diamonds', baseUnits: 2180, bonus: 218, price: 19.99, tag: 'Mega Bonus' },
+          { id: 'ff-weekly', name: 'Weekly Diamond Pass', baseUnits: 450, bonus: 0, price: 1.99, tag: 'Best ROI' }
+        ]
+      },
+      {
+        id: 'mlbb',
+        title: 'Mobile Legends',
+        category: 'MOBA',
+        badge: 'Trending',
+        badgeColor: 'bg-blue-500',
+        currencyName: 'Diamonds',
+        currencySymbol: '💎',
+        iconType: 'mlbb',
+        idLabel: 'User ID & Zone ID',
+        idPlaceholder: 'e.g. 12345678',
+        hasServer: true,
+        denominations: [
+          { id: 'ml-50', name: '50 Diamonds', baseUnits: 50, bonus: 5, price: 0.99, tag: 'Fast' },
+          { id: 'ml-250', name: '250 + 25 Diamonds', baseUnits: 250, bonus: 25, price: 4.79, tag: '+10%' },
+          { id: 'ml-500', name: '500 + 65 Diamonds', baseUnits: 500, bonus: 65, price: 9.49, tag: 'Popular', popular: true },
+          { id: 'ml-1000', name: '1,000 + 155 Diamonds', baseUnits: 1000, bonus: 155, price: 18.99, tag: 'Value' },
+          { id: 'ml-pass', name: 'Weekly Diamond Pass', baseUnits: 210, bonus: 0, price: 1.99, tag: 'Recommended' },
+          { id: 'ml-twilight', name: 'Twilight Pass', baseUnits: 0, bonus: 0, price: 9.99, tag: 'Special Pass' }
+        ]
+      },
+      {
+        id: 'pubgm',
+        title: 'PUBG Mobile',
+        category: 'Shooter',
+        badge: 'Official',
+        badgeColor: 'bg-emerald-600',
+        currencyName: 'Unknown Cash',
+        currencySymbol: 'UC',
+        iconType: 'pubg',
+        idLabel: 'Character ID (UID)',
+        idPlaceholder: 'e.g. 518392019',
+        hasServer: false,
+        denominations: [
+          { id: 'pubg-60', name: '60 UC', baseUnits: 60, bonus: 0, price: 0.99, tag: 'Starter' },
+          { id: 'pubg-300', name: '300 + 25 UC', baseUnits: 300, bonus: 25, price: 4.99, tag: '+8%' },
+          { id: 'pubg-600', name: '600 + 60 UC', baseUnits: 600, bonus: 60, price: 9.99, tag: 'Royale Pass', popular: true },
+          { id: 'pubg-1500', name: '1,500 + 300 UC', baseUnits: 1500, bonus: 300, price: 24.99, tag: '+20%' },
+          { id: 'pubg-3000', name: '3,000 + 850 UC', baseUnits: 3000, bonus: 850, price: 49.99, tag: 'High Value' }
+        ]
+      },
+    ];
+
+    const PAYMENT_METHODS = [
+      { 
+        id: 'khqr', 
+        name: 'Cambodia KHQR (Bakong)', 
+        fee: 0, 
+        sub: 'ABA Mobile, ACLEDA, Wing, Sathapana, Canadia', 
+        icon: '🇰🇭', 
+        tag: 'HOT',
+        isKhqr: true 
+      },
+    ];
+
+    /* ================= STATE MANAGEMENT ================= */
+    let activeGame = GAMES_CATALOG[0]; // Roblox default
+    let selectedDenom = activeGame.denominations[2]; // 800 Robux
+    let selectedPayment = PAYMENT_METHODS[0]; // KHQR Cambodia as premier default
+    let currentFilter = 'all';
+    let appliedPromo = null; // { code: 'ROBLOX20', discount: 3.00, type: 'fixed' }
+    let orderHistory = JSON.parse(localStorage.getItem('nexus_orders') || '[]');
+    let verifyTimeout = null;
+
+    /* KHQR Dynamic State */
+    let khqrCurrency = 'USD'; // 'USD' or 'KHR'
+    const KHR_EXCHANGE_RATE = 4100;
+    let khqrCountdownInterval = null;
+    let khqrPollingInterval = null;
+    let khqrTimeRemaining = 300; // 5 minutes in seconds
+    let currentKhqrMd5 = '';
+    let currentKhqrPayload = '';
+    let currentKhqrBillNumber = '';
+    let khqrCheckInProgress = false;
+    let khqrGenerationId = 0;
+
+    /* ================= INITIALIZATION ================= */
+    window.addEventListener('DOMContentLoaded', () => {
+      renderGamesCatalog(GAMES_CATALOG);
+      loadGameToRecharge(activeGame.id);
+      updateOrderHistoryBadge();
+    });
+
+    /* ================= RENDER CATALOG ================= */
+    function renderGamesCatalog(games) {
+      const grid = document.getElementById('gamesGrid');
+      const emptyState = document.getElementById('emptyCatalogState');
+      const badge = document.getElementById('gameCountBadge');
+      
+      badge.textContent = `${games.length} titles`;
+
+      if (games.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = games.map(game => {
+        const isCurrent = game.id === activeGame.id;
+        return `
+          <div 
+            onclick="selectGame('${game.id}')"
+            class="group cursor-pointer rounded-2xl bg-dark-850 border ${isCurrent ? 'border-cyan-400 shadow-lg shadow-cyan-500/20' : 'border-slate-800 hover:border-slate-700'} p-3.5 sm:p-4 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1"
+          >
+            <div>
+              <div class="relative w-full aspect-square rounded-xl bg-dark-900 overflow-hidden mb-3 border border-slate-800 flex items-center justify-center p-4">
+                <!-- Badge -->
+                <span class="absolute top-2 left-2 text-[10px] font-bold text-white px-2 py-0.5 rounded-full ${game.badgeColor} shadow-md">
+                  ${game.badge}
+                </span>
+
+                <!-- Game SVG / Visual -->
+                <div class="transform group-hover:scale-110 transition duration-300">
+                  ${getGameVisualSvg(game.iconType)}
+                </div>
+              </div>
+
+              <div class="flex items-center gap-1.5 mb-1">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">${game.category}</span>
+              </div>
+              <h4 class="font-bold text-sm sm:text-base text-white group-hover:text-cyan-400 transition">${game.title}</h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">${game.currencyName}</p>
+            </div>
+
+            <div class="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span class="text-slate-500 font-mono">From <b class="text-white font-semibold">$${game.denominations[0].price}</b></span>
+              <span class="text-cyan-400 font-bold group-hover:underline">Top Up →</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ================= SVG ASSET GENERATORS ================= */
+    function getGameVisualSvg(type) {
+      switch (type) {
+        case 'roblox':
+          return `
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Roblox_Corporation_2025_logo.svg/250px-Roblox_Corporation_2025_logo.svg.png"
+              alt="Roblox logo"
+              class="w-16 h-16 object-contain filter drop-shadow(0 0 10px rgba(225,29,72,0.4))"
+            >
+          `;
+        case 'ff':
+          return `
+            <img
+              src="https://th.bing.com/th/id/OIP.u8WmbYmHzRHU8BoSzVeW6AAAAA?w=173&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+              alt="Free Fire logo"
+              class="w-16 h-16 object-contain filter drop-shadow(0 0 10px rgba(245,158,11,0.4))"
+            >
+          `;
+        case 'mlbb':
+          return `
+            <img
+              src="https://akmwebstatic.yuanzhanapp.com/web/madmin/image_2b429241bab33d5e63fab771245924d4.png"
+              alt="Mobile Legends logo"
+              class="w-16 h-16 object-contain filter drop-shadow(0 0 10px rgba(59,130,246,0.4))"
+            >
+          `;
+        case 'pubg':
+          return `
+            <img
+              src="https://tse2.mm.bing.net/th/id/OIP.wYDTZ75EbeE8hkRbHVwL3AHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+              alt="PUBG Mobile logo"
+              class="w-16 h-16 object-contain filter drop-shadow(0 0 10px rgba(16,185,129,0.4))"
+            >
+          `;
+        default:
+          return `🎮`;
+      }
+    }
+
+    /* ================= GAME SELECTION & CONFIGURATION ================= */
+    function selectGame(gameId) {
+      const found = GAMES_CATALOG.find(g => g.id === gameId);
+      if (!found) return;
+      activeGame = found;
+      // Select popular denom by default
+      selectedDenom = activeGame.denominations.find(d => d.popular) || activeGame.denominations[0];
+      
+      // Update catalog highlight
+      renderGamesCatalog(getCurrentFilteredList());
+
+      // Update Top Up station
+      loadGameToRecharge(gameId);
+
+      // Scroll smoothly to recharge section
+      document.getElementById('rechargeSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function loadGameToRecharge(gameId) {
+      document.getElementById('activeGameTitle').textContent = `Top Up: ${activeGame.title} ${activeGame.currencyName}`;
+      document.getElementById('activeGameCurrencyBadge').textContent = `Official Currency: ${activeGame.currencyName} (${activeGame.currencySymbol})`;
+      document.getElementById('playerIdLabel').textContent = activeGame.idLabel;
+      document.getElementById('step1Instruction').textContent = `Enter your ${activeGame.idLabel} to deliver directly`;
+      document.getElementById('playerIdInput').placeholder = activeGame.idPlaceholder;
+
+      // Server toggle
+      const serverWrap = document.getElementById('serverFieldWrapper');
+      if (activeGame.hasServer) {
+        serverWrap.classList.remove('hidden');
+      } else {
+        serverWrap.classList.add('hidden');
+      }
+
+      // Render Denominations
+      renderDenominations();
+
+      // Render Payment Methods
+      renderPaymentMethods();
+
+      // Trigger automatic account ID check
+      debouncedVerifyAccount();
+
+      // Refresh Summary
+      updateOrderSummary();
+    }
+
+    /* ================= RENDER DENOMINATIONS ================= */
+    function renderDenominations() {
+      const grid = document.getElementById('denominationsGrid');
+      grid.innerHTML = activeGame.denominations.map(denom => {
+        const isSelected = selectedDenom && selectedDenom.id === denom.id;
+        return `
+          <div 
+            onclick="selectDenomination('${denom.id}')"
+            class="relative cursor-pointer p-4 rounded-xl border transition-all text-left flex flex-col justify-between ${
+              isSelected 
+                ? 'bg-gradient-to-b from-blue-900/40 to-dark-850 border-cyan-400 neon-border-cyan' 
+                : 'bg-dark-900/80 border-slate-800 hover:border-slate-700 hover:bg-dark-850'
+            }"
+          >
+            ${denom.tag ? `
+              <span class="absolute -top-2.5 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full ${denom.popular ? 'bg-amber-500 text-black' : 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'}">
+                ${denom.tag}
+              </span>
+            ` : ''}
+
+            <div>
+              <div class="flex items-center gap-1.5 font-gaming text-lg font-bold text-white">
+                <span class="text-cyan-400">${activeGame.currencySymbol}</span>
+                <span>${denom.name}</span>
+              </div>
+              ${denom.bonus > 0 ? `
+                <span class="inline-block mt-1 text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                  +${denom.bonus} Bonus Included
+                </span>
+              ` : `
+                <span class="inline-block mt-1 text-[11px] text-slate-500">Standard Delivery</span>
+              `}
+            </div>
+
+            <div class="mt-4 pt-2 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs text-slate-400">Price</span>
+              <span class="text-base font-extrabold text-white font-mono">$${denom.price.toFixed(2)}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectDenomination(denomId) {
+      const found = activeGame.denominations.find(d => d.id === denomId);
+      if (found) {
+        selectedDenom = found;
+        renderDenominations();
+        updateOrderSummary();
+      }
+    }
+
+    /* ================= RENDER PAYMENT METHODS ================= */
+    function renderPaymentMethods() {
+      const grid = document.getElementById('paymentMethodsGrid');
+      grid.innerHTML = PAYMENT_METHODS.map(pm => {
+        const isSelected = selectedPayment && selectedPayment.id === pm.id;
+        return `
+          <div 
+            onclick="selectPaymentMethod('${pm.id}')"
+            class="relative cursor-pointer p-3.5 rounded-xl border transition-all flex items-center justify-between ${
+              isSelected 
+                ? (pm.isKhqr 
+                    ? 'bg-rose-950/40 border-rose-500 shadow-md shadow-rose-500/20' 
+                    : 'bg-blue-900/30 border-cyan-400 shadow-md shadow-cyan-500/10')
+                : 'bg-dark-900/80 border-slate-800 hover:border-slate-700'
+            }"
+          >
+            ${pm.tag ? `
+              <span class="absolute -top-2 right-3 text-[9px] font-black uppercase px-1.5 py-0.2 rounded-full ${pm.isKhqr ? 'bg-rose-600 text-white' : 'bg-cyan-500 text-dark-900'} shadow">
+                ${pm.tag}
+              </span>
+            ` : ''}
+
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">${pm.icon}</span>
+              <div>
+                <p class="text-xs font-bold text-white flex items-center gap-1.5">
+                  <span>${pm.name}</span>
+                  ${pm.isKhqr ? '<span class="text-[9px] bg-rose-600/30 text-rose-300 border border-rose-500/40 px-1 py-0.2 rounded font-mono">Instant</span>' : ''}
+                </p>
+                <p class="text-[11px] text-slate-400">${pm.sub}</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-[11px] font-bold text-emerald-400">0% Fee</span>
+              <div class="w-4 h-4 rounded-full border ${isSelected ? (pm.isKhqr ? 'border-rose-400 bg-rose-500' : 'border-cyan-400 bg-cyan-400') : 'border-slate-600'} ml-auto mt-1 flex items-center justify-center">
+                ${isSelected ? '<div class="w-1.5 h-1.5 bg-dark-900 rounded-full"></div>' : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectPaymentMethod(pmId) {
+      const found = PAYMENT_METHODS.find(p => p.id === pmId);
+      if (found) {
+        selectedPayment = found;
+        renderPaymentMethods();
+        updateOrderSummary();
+      }
+    }
+
+    /* ================= ACCOUNT VERIFICATION LOGIC ================= */
+    function debouncedVerifyAccount() {
+      clearTimeout(verifyTimeout);
+      const feedback = document.getElementById('verifyFeedback');
+      feedback.innerHTML = `
+        <div class="w-3.5 h-3.5 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin"></div>
+        <span class="text-slate-400">Verifying Gamer ID with ${activeGame.title} servers...</span>
+      `;
+      feedback.className = "mt-3 flex items-center gap-2 text-xs py-2 px-3 rounded-lg bg-blue-500/10 border border-blue-500/30 text-blue-300";
+
+      verifyTimeout = setTimeout(() => {
+        executeAccountVerification();
+      }, 700);
+    }
+
+    function triggerManualVerify() {
+      executeAccountVerification();
+    }
+
+    function executeAccountVerification() {
+      const idVal = document.getElementById('playerIdInput').value.trim();
+      const feedback = document.getElementById('verifyFeedback');
+      
+      if (!idVal || idVal.length < 3) {
+        feedback.innerHTML = `
+          <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>Please enter a valid player tag or ID (at least 3 characters)</span>
+        `;
+        feedback.className = "mt-3 flex items-center gap-2 text-xs py-2 px-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400";
+        return;
+      }
+
+      // Simulated verified status
+      feedback.innerHTML = `
+        <svg class="w-4 h-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span>Account Verified: <b>${escapeHtml(idVal)}</b> • Status: <b class="text-emerald-300">ACTIVE</b></span>
+      `;
+      feedback.className = "mt-3 flex items-center gap-2 text-xs py-2 px-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400";
+
+      updateOrderSummary();
+    }
+
+    /* ================= PROMO CODE LOGIC ================= */
+    function applyPromoCode() {
+      const codeInput = document.getElementById('promoCodeInput');
+      const val = codeInput.value.trim().toUpperCase();
+      const msg = document.getElementById('promoMessage');
+
+      if (!val) {
+        msg.textContent = 'Please enter a voucher code.';
+        msg.className = 'text-[11px] mt-1.5 text-amber-400';
+        return;
+      }
+
+      if (val === 'ROBLOX20') {
+        appliedPromo = { code: 'ROBLOX20', discount: 3.00, type: 'fixed' };
+        msg.textContent = 'Awesome! $3.00 coupon discount applied.';
+        msg.className = 'text-[11px] mt-1.5 text-emerald-400 font-semibold';
+        showToast('Coupon Applied: $3.00 OFF', '🎉');
+      } else if (val === 'NEXUS10') {
+        appliedPromo = { code: 'NEXUS10', discount: 0.10, type: 'percent' };
+        msg.textContent = 'Awesome! 10% instant promo discount applied.';
+        msg.className = 'text-[11px] mt-1.5 text-emerald-400 font-semibold';
+        showToast('Coupon Applied: 10% OFF', '🎉');
+      } else {
+        appliedPromo = null;
+        msg.textContent = 'Invalid promo code. Try ROBLOX20 or NEXUS10.';
+        msg.className = 'text-[11px] mt-1.5 text-rose-400';
+      }
+
+      updateOrderSummary();
+    }
+
+    function applyBannerPromo(code) {
+      const input = document.getElementById('promoCodeInput');
+      input.value = code;
+      applyPromoCode();
+      document.getElementById('rechargeSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* ================= ORDER SUMMARY CALCULATOR ================= */
+    function updateOrderSummary() {
+      const idVal = document.getElementById('playerIdInput').value.trim() || 'Not entered';
+      document.getElementById('sumGameName').textContent = activeGame.title;
+      document.getElementById('sumPlayerId').textContent = idVal;
+      document.getElementById('sumItemTitle').textContent = selectedDenom ? selectedDenom.name : 'Select amount';
+      document.getElementById('sumPaymentName').textContent = selectedPayment ? selectedPayment.name : 'Select payment';
+
+      const basePrice = selectedDenom ? selectedDenom.price : 0;
+      document.getElementById('sumBasePrice').textContent = `$${basePrice.toFixed(2)}`;
+
+      let discount = 0;
+      const discountRow = document.getElementById('sumDiscountRow');
+
+      if (appliedPromo) {
+        if (appliedPromo.type === 'fixed') {
+          discount = Math.min(appliedPromo.discount, basePrice > 0 ? basePrice - 0.50 : 0);
+        } else if (appliedPromo.type === 'percent') {
+          discount = basePrice * appliedPromo.discount;
+        }
+        discountRow.classList.remove('hidden');
+        document.getElementById('sumDiscountCodeLabel').textContent = appliedPromo.code;
+        document.getElementById('sumDiscountAmount').textContent = `-$${discount.toFixed(2)}`;
+      } else {
+        discountRow.classList.add('hidden');
+      }
+
+      const grandTotal = Math.max(0, basePrice - discount);
+      document.getElementById('sumGrandTotal').textContent = `$${grandTotal.toFixed(2)}`;
+    }
+
+    /* ================= CHECKOUT FLOW & SIMULATION ================= */
+    function initiateCheckout() {
+      const idVal = document.getElementById('playerIdInput').value.trim();
+      const email = document.getElementById('userEmailInput').value.trim();
+
+      if (!idVal || idVal.length < 3) {
+        showToast('Please provide your Game Player ID first', '⚠️');
+        document.getElementById('playerIdInput').focus();
+        return;
+      }
+
+      if (!email || !email.includes('@')) {
+        showToast('Please provide a valid receipt email', '⚠️');
+        document.getElementById('userEmailInput').focus();
+        return;
+      }
+
+      if (!selectedDenom) {
+        showToast('Please select a top-up package', '⚠️');
+        return;
+      }
+
+      if (!selectedPayment || selectedPayment.id !== 'khqr') {
+        showToast('KHQR is the only supported payment method', '⚠️');
+        return;
+      }
+
+      openKhqrCheckoutModal();
+    }
+
+    /* ================= CAMBODIA KHQR PAYMENT SYSTEM ================= */
+    function openKhqrCheckoutModal() {
+      const modal = document.getElementById('khqrModal');
+      modal.classList.remove('hidden');
+
+      khqrCurrency = 'USD';
+      updateKhqrCurrencyUi();
+      resetKhqrStatusUi();
+      generateDynamicKhqrPayload();
+    }
+
+    function cancelKhqrPayment() {
+      clearInterval(khqrCountdownInterval);
+      clearInterval(khqrPollingInterval);
+      document.getElementById('khqrModal').classList.add('hidden');
+    }
+
+    function switchKhqrCurrency(curr) {
+      khqrCurrency = curr;
+      updateKhqrCurrencyUi();
+      generateDynamicKhqrPayload();
+      showToast(`Switched KHQR currency to ${curr}`, '🇰🇭');
+    }
+
+    function updateKhqrCurrencyUi() {
+      const usdBtn = document.getElementById('toggleUsdBtn');
+      const khrBtn = document.getElementById('toggleKhrBtn');
+      const amountPrimary = document.getElementById('khqrAmountPrimary');
+      const currencyLabel = document.getElementById('khqrCurrencyLabel');
+      const convertedSub = document.getElementById('khqrConvertedSub');
+
+      const usdPrice = calculateFinalPrice();
+      const khrPrice = Math.round(usdPrice * KHR_EXCHANGE_RATE);
+
+      if (khqrCurrency === 'USD') {
+        usdBtn.className = 'px-3 py-1 rounded-md font-semibold text-white bg-rose-600 shadow-sm transition';
+        khrBtn.className = 'px-3 py-1 rounded-md font-semibold text-slate-400 hover:text-white transition';
+        amountPrimary.textContent = `$${usdPrice.toFixed(2)}`;
+        currencyLabel.textContent = 'USD';
+        convertedSub.textContent = `≈ ${khrPrice.toLocaleString()} KHR (Rate: 1 USD = 4,100 KHR)`;
+      } else {
+        khrBtn.className = 'px-3 py-1 rounded-md font-semibold text-white bg-rose-600 shadow-sm transition';
+        usdBtn.className = 'px-3 py-1 rounded-md font-semibold text-slate-400 hover:text-white transition';
+        amountPrimary.textContent = `៛${khrPrice.toLocaleString()}`;
+        currencyLabel.textContent = 'KHR';
+        convertedSub.textContent = `≈ $${usdPrice.toFixed(2)} USD (Official NBC Exchange Rate)`;
+      }
+    }
+
+    function calculateFinalPrice() {
+      const basePrice = selectedDenom ? selectedDenom.price : 0;
+      let discount = 0;
+      if (appliedPromo) {
+        if (appliedPromo.type === 'fixed') {
+          discount = Math.min(appliedPromo.discount, basePrice > 0 ? basePrice - 0.50 : 0);
+        } else if (appliedPromo.type === 'percent') {
+          discount = basePrice * appliedPromo.discount;
+        }
+      }
+      return Math.max(0.50, basePrice - discount);
+    }
+
+    async function generateDynamicKhqrPayload() {
+      const generationId = ++khqrGenerationId;
+      clearInterval(khqrCountdownInterval);
+      clearInterval(khqrPollingInterval);
+      khqrCheckInProgress = false;
+      currentKhqrMd5 = '';
+      currentKhqrPayload = '';
+      currentKhqrBillNumber = '';
+      resetKhqrStatusUi();
+      document.getElementById('khqrCodeTarget').replaceChildren();
+
+      const usdPrice = calculateFinalPrice();
+      const khrPrice = Math.round(usdPrice * KHR_EXCHANGE_RATE);
+      const billNumber = 'NX' + Math.floor(100000 + Math.random() * 900000);
+      try {
+        const response = await fetch('/api/generate-khqr', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: khqrCurrency === 'USD' ? usdPrice : khrPrice,
+            currency: khqrCurrency,
+            orderId: billNumber
+          })
+        });
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result.error || 'Unable to generate a KHQR payment.');
+        }
+
+        currentKhqrPayload = result.qrString;
+        currentKhqrMd5 = result.md5;
+        currentKhqrBillNumber = result.billNumber;
+        document.getElementById('khqrMd5Hash').textContent = `MD5: ${currentKhqrMd5}`;
+
+        const targetDiv = document.getElementById('khqrCodeTarget');
+        const image = document.createElement('img');
+        image.src = result.qrImage;
+        image.alt = 'Bakong KHQR payment code';
+        image.width = 190;
+        image.height = 190;
+        targetDiv.replaceChildren(image);
+        startKhqrCountdown();
+        khqrPollingInterval = setInterval(checkKhqrPaymentStatus, 3000);
+      } catch (err) {
+        console.error('KHQR generation failed:', err);
+        document.getElementById('khqrMd5Hash').textContent = 'KHQR generation failed';
+        document.getElementById('khqrStatusText').textContent = err.message;
+        document.getElementById('khqrStatusText').className = 'text-rose-400 font-medium';
+      }
+    }
+
+    function startKhqrCountdown() {
+      clearInterval(khqrCountdownInterval);
+      khqrTimeRemaining = 300; // 5 minutes
+      updateKhqrTimerUi();
+
+      khqrCountdownInterval = setInterval(() => {
+        khqrTimeRemaining--;
+        updateKhqrTimerUi();
+
+        if (khqrTimeRemaining <= 0) {
+          clearInterval(khqrCountdownInterval);
+          handleKhqrExpired();
+        }
+      }, 1000);
+    }
+
+    function updateKhqrTimerUi() {
+      const mins = Math.floor(khqrTimeRemaining / 60);
+      const secs = khqrTimeRemaining % 60;
+      const str = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      document.getElementById('khqrCountdown').textContent = str;
+
+      const progressPct = (khqrTimeRemaining / 300) * 100;
+      document.getElementById('khqrTimerProgress').style.width = `${progressPct}%`;
+    }
+
+    function handleKhqrExpired() {
+      const statusPill = document.getElementById('khqrStatusPill');
+      document.getElementById('khqrStatusText').textContent = 'QR Expired. Tap Refresh to renew.';
+      document.getElementById('khqrStatusText').className = 'text-rose-400 font-bold';
+      document.getElementById('khqrStatusDot').className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500';
+      document.getElementById('khqrStatusPing').classList.add('hidden');
+    }
+
+    function resetKhqrStatusUi() {
+      document.getElementById('khqrStatusText').textContent = 'Waiting for customer scan...';
+      document.getElementById('khqrStatusText').className = 'text-slate-300 font-medium';
+      document.getElementById('khqrStatusDot').className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500';
+      document.getElementById('khqrStatusPing').classList.remove('hidden');
+      document.getElementById('khqrMd5Hash').textContent = 'Generating Bakong KHQR...';
+      document.getElementById('simulateScanBtn').disabled = false;
+      document.getElementById('simulateScanBtn').classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+
+    function regenerateKhqr() {
+      generateDynamicKhqrPayload();
+      showToast('New dynamic KHQR generated!', '🔄');
+    }
+
+    function copyKhqrHash() {
+      copyToClipboardText(currentKhqrMd5);
+      showToast('Bakong transaction MD5 hash copied!', '📋');
+    }
+
+    function downloadKhqrImage() {
+      const img = document.querySelector('#khqrCodeTarget img');
+      if (img && img.src) {
+        const link = document.createElement('a');
+        link.href = img.src;
+        link.download = `nova-topup-khqr-${Date.now()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast('KHQR image saved to downloads!', '💾');
+      } else {
+        showToast('Generating image, please try in 1s...', '⏳');
+      }
+    }
+
+    /* ================= BAKONG PAYMENT STATUS CHECKING ================= */
+    async function checkKhqrPaymentStatus() {
+      if (!currentKhqrMd5 || khqrCheckInProgress || khqrTimeRemaining <= 0) return;
+
+      const generationId = khqrGenerationId;
+      const md5 = currentKhqrMd5;
+      khqrCheckInProgress = true;
+      const btn = document.getElementById('simulateScanBtn');
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+
+      try {
+        const response = await fetch('/api/check-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ md5 })
+        });
+        const result = await response.json();
+        if (generationId !== khqrGenerationId) return;
+        if (!response.ok) {
+          throw new Error(result.error || 'Unable to check payment status.');
+        }
+
+        if (result.paid) {
+          clearInterval(khqrCountdownInterval);
+          clearInterval(khqrPollingInterval);
+          const statusText = document.getElementById('khqrStatusText');
+          statusText.textContent = 'Payment confirmed by Bakong.';
+          statusText.className = 'text-emerald-400 font-bold';
+          document.getElementById('khqrStatusDot').className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400';
+          document.getElementById('khqrStatusPing').classList.add('hidden');
+          showToast('Bakong payment confirmed.', '🇰🇭');
+          cancelKhqrPayment();
+          showKhqrSuccessReceipt();
+        } else {
+          document.getElementById('khqrStatusText').textContent = 'Waiting for payment confirmation...';
+          document.getElementById('khqrStatusText').className = 'text-slate-300 font-medium';
+        }
+      } catch (err) {
+        if (generationId !== khqrGenerationId) return;
+        console.error('Bakong payment check failed:', err);
+        document.getElementById('khqrStatusText').textContent = err.message;
+        document.getElementById('khqrStatusText').className = 'text-rose-400 font-medium';
+      } finally {
+        if (generationId === khqrGenerationId) {
+          khqrCheckInProgress = false;
+        }
+        if (generationId === khqrGenerationId && khqrTimeRemaining > 0) {
+          btn.disabled = false;
+          btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+      }
+    }
+
+    function showKhqrSuccessReceipt() {
+      const modal = document.getElementById('checkoutModal');
+      const procState = document.getElementById('modalProcessingState');
+      const succState = document.getElementById('modalSuccessState');
+      
+      modal.classList.remove('hidden');
+      procState.classList.add('hidden');
+      succState.classList.remove('hidden');
+
+      const idVal = document.getElementById('playerIdInput').value.trim() || 'RobloxMaster_2026';
+      const txId = currentKhqrBillNumber;
+      const usdPrice = calculateFinalPrice();
+      const khrPrice = Math.round(usdPrice * KHR_EXCHANGE_RATE);
+      const paidTotalFormatted = khqrCurrency === 'USD' 
+        ? `$${usdPrice.toFixed(2)} USD` 
+        : `៛${khrPrice.toLocaleString()} KHR ($${usdPrice.toFixed(2)})`;
+
+      // Fill in receipt modal
+      document.getElementById('rcptTxId').textContent = txId;
+      document.getElementById('rcptGame').textContent = activeGame.title;
+      document.getElementById('rcptPlayer').textContent = idVal;
+      document.getElementById('rcptItem').textContent = selectedDenom.name;
+      document.getElementById('rcptPayment').textContent = `Cambodia KHQR (Bakong / ABA Mobile)`;
+      document.getElementById('rcptTotal').textContent = paidTotalFormatted;
+
+      // Save to order history
+      const newOrder = {
+        txId,
+        game: activeGame.title,
+        player: idVal,
+        item: selectedDenom.name,
+        payment: 'KHQR (Bakong / ABA)',
+        total: paidTotalFormatted,
+        timestamp: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      orderHistory.unshift(newOrder);
+      localStorage.setItem('nexus_orders', JSON.stringify(orderHistory));
+      updateOrderHistoryBadge();
+    }
+
+    function completeCheckoutSuccess() {
+      const idVal = document.getElementById('playerIdInput').value.trim();
+      const txId = 'NX-' + Math.floor(10000000 + Math.random() * 90000000);
+      const totalStr = document.getElementById('sumGrandTotal').textContent;
+
+      document.getElementById('modalProcessingState').classList.add('hidden');
+      document.getElementById('modalSuccessState').classList.remove('hidden');
+
+      // Populate Receipt
+      document.getElementById('rcptTxId').textContent = txId;
+      document.getElementById('rcptGame').textContent = activeGame.title;
+      document.getElementById('rcptPlayer').textContent = idVal;
+      document.getElementById('rcptItem').textContent = selectedDenom.name;
+      document.getElementById('rcptPayment').textContent = selectedPayment.name;
+      document.getElementById('rcptTotal').textContent = totalStr;
+
+      // Save to order history
+      const newOrder = {
+        txId,
+        game: activeGame.title,
+        player: idVal,
+        item: selectedDenom.name,
+        payment: selectedPayment.name,
+        total: totalStr,
+        timestamp: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      orderHistory.unshift(newOrder);
+      localStorage.setItem('nexus_orders', JSON.stringify(orderHistory));
+      updateOrderHistoryBadge();
+    }
+
+    function closeReceiptAndRefresh() {
+      document.getElementById('checkoutModal').classList.add('hidden');
+      showToast('Order completed & logged to My Orders!', '✅');
+    }
+
+    function printOrCopyReceipt() {
+      const tx = document.getElementById('rcptTxId').textContent;
+      const game = document.getElementById('rcptGame').textContent;
+      const item = document.getElementById('rcptItem').textContent;
+      const total = document.getElementById('rcptTotal').textContent;
+      const summary = `NOVA TOPUP Receipt: ${tx} | Game: ${game} | Item: ${item} | Paid: ${total} | Status: DELIVERED`;
+      
+      copyToClipboardText(summary);
+      showToast('Receipt details copied to clipboard!', '📋');
+    }
+
+    /* ================= ORDER HISTORY MANAGEMENT ================= */
+    function openHistoryModal() {
+      const modal = document.getElementById('historyModal');
+      const container = document.getElementById('historyItemsContainer');
+      modal.classList.remove('hidden');
+
+      if (orderHistory.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-10 space-y-2">
+            <p class="text-3xl">🎮</p>
+            <p class="text-white font-semibold text-sm">No orders yet</p>
+            <p class="text-xs text-slate-500">Your completed top-ups will automatically appear here.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = orderHistory.map(o => `
+        <div class="p-3.5 bg-dark-900/90 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-white text-sm">${escapeHtml(o.game)}</span>
+              <span class="font-mono text-cyan-400 text-[11px]">${escapeHtml(o.txId)}</span>
+              <span class="bg-emerald-500/10 text-emerald-400 text-[10px] px-1.5 py-0.2 rounded">Delivered</span>
+            </div>
+            <p class="text-slate-300 mt-1 font-semibold">${escapeHtml(o.item)}</p>
+            <p class="text-[11px] text-slate-500">Player: <b class="text-slate-300">${escapeHtml(o.player)}</b> • ${o.timestamp}</p>
+          </div>
+          <div class="sm:text-right flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto">
+            <span class="font-mono text-base font-extrabold text-cyan-400">${o.total}</span>
+            <button onclick="copyToClipboardText('${o.txId}'); showToast('Transaction ID copied: ${o.txId}', '📋');" class="text-[11px] text-slate-400 hover:text-white underline mt-1">Copy TX</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function closeHistoryModal() {
+      document.getElementById('historyModal').classList.add('hidden');
+    }
+
+    function clearHistory() {
+      orderHistory = [];
+      localStorage.removeItem('nexus_orders');
+      updateOrderHistoryBadge();
+      openHistoryModal();
+      showToast('Order history cleared.', '🧹');
+    }
+
+    function updateOrderHistoryBadge() {
+      const badge = document.getElementById('orderHistoryBadge');
+      if (orderHistory.length > 0) {
+        badge.textContent = orderHistory.length;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    /* ================= SEARCH & CATEGORY FILTERING ================= */
+    function filterCategory(cat) {
+      currentFilter = cat;
+      const pills = document.querySelectorAll('.cat-pill');
+      pills.forEach(p => {
+        if (p.getAttribute('data-cat') === cat) {
+          p.className = 'cat-pill active px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white transition whitespace-nowrap';
+        } else {
+          p.className = 'cat-pill px-4 py-2 rounded-xl text-xs font-semibold bg-dark-800 text-slate-400 hover:text-white hover:bg-dark-700 transition whitespace-nowrap';
+        }
+      });
+
+      renderGamesCatalog(getCurrentFilteredList());
+    }
+
+    function handleSearch(query) {
+      const clearBtn = document.getElementById('searchClearBtn');
+      if (query.trim()) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+      renderGamesCatalog(getCurrentFilteredList());
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('searchInput');
+      input.value = '';
+      document.getElementById('searchClearBtn').classList.add('hidden');
+      filterCategory('all');
+    }
+
+    function applySorting(criteria) {
+      renderGamesCatalog(getCurrentFilteredList());
+    }
+
+    function getCurrentFilteredList() {
+      const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+      const sortVal = document.getElementById('sortSelect')?.value || 'popularity';
+
+      let filtered = GAMES_CATALOG.filter(game => {
+        const matchesCategory = currentFilter === 'all' || game.category.toLowerCase() === currentFilter.toLowerCase();
+        const matchesQuery = !query || 
+          game.title.toLowerCase().includes(query) || 
+          game.currencyName.toLowerCase().includes(query) ||
+          game.category.toLowerCase().includes(query);
+        return matchesCategory && matchesQuery;
+      });
+
+      if (sortVal === 'name') {
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+      } else if (sortVal === 'discount') {
+        filtered.sort((a, b) => {
+          const maxA = Math.max(...a.denominations.map(d => d.bonus));
+          const maxB = Math.max(...b.denominations.map(d => d.bonus));
+          return maxB - maxA;
+        });
+      }
+
+      return filtered;
+    }
+
+    function scrollToCatalog() {
+      document.getElementById('categoryContainer').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetToHome() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleSupportModal() {
+      const m = document.getElementById('supportModal');
+      m.classList.toggle('hidden');
+    }
+
+    /* ================= UTILITIES & HELPERS ================= */
+    function showToast(text, icon = '✨') {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').textContent = text;
+      document.getElementById('toastIcon').textContent = icon;
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3000);
+    }
+
+    function showInfoToast(msg) {
+      showToast(msg, 'ℹ️');
+    }
+
+    function copyToClipboardText(text) {
+      const tempInput = document.createElement('textarea');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        console.error('Copy fallback error:', err);
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>
